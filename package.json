@@ -30,8 +30,9 @@
     "lint:fix": "npx eslint --fix",
     "lint:lockfile": "lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hotst npm",
     "prepare": "husky install",
-    "test": "jest --runInBand",
-    "test:watch": "jest --watch --runInBand --detectOpenHandles --verbose"
+    "test": "npm run test:clear_cache && jest --runInBand",
+    "test:watch": "npm run test:clear_cache && jest --watch --runInBand --detectOpenHandles --verbose",
+    "test:clear_cache": "jest --clearCache"
   },
   "lint-staged": {
     "*.ts": "npm run lint:fix"
