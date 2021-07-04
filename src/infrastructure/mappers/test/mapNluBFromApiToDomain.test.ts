@@ -1,5 +1,5 @@
 import { mapNluBFromApiToDomain } from '..'
-import { NluBResponse } from '@types'
+import { NluBResponse, ServiceResponse } from '@types'
 
 describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
   const mockedData: NluBResponse[] = [
@@ -12,17 +12,23 @@ describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
       intent: 'two',
       entity: 'two',
       confidence: 2
-    },
-    {
-      intent: 'three',
-      entity: 'three',
-      confidence: 3
     }
   ]
 
   it('maps the information successfully', () => {
     const nluBRawData: NluBResponse[] = [...mockedData]
-    const expectedResult: NluBResponse[] = [...nluBRawData]
+    const expectedResult: ServiceResponse[] = [
+      {
+        intents: ['one'],
+        entities: ['one'],
+        confidence: 1
+      },
+      {
+        intents: ['two'],
+        entities: ['two'],
+        confidence: 2
+      }
+    ]
 
     expect(mapNluBFromApiToDomain(nluBRawData)).toStrictEqual(expectedResult)
   })
@@ -37,8 +43,18 @@ describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
       },
       ...restOfData
     ]
-    const expectedResult = [...nluBRawData]
-    expectedResult[0].intent = ''
+    const expectedResult: ServiceResponse[] = [
+      {
+        intents: [],
+        entities: ['one'],
+        confidence: 1
+      },
+      {
+        intents: ['two'],
+        entities: ['two'],
+        confidence: 2
+      }
+    ]
 
     expect(mapNluBFromApiToDomain(nluBRawData)).toStrictEqual(expectedResult)
   })
@@ -53,8 +69,18 @@ describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
       },
       ...restOfData
     ]
-    const expectedResult = [...nluBRawData]
-    expectedResult[0].entity = ''
+    const expectedResult: ServiceResponse[] = [
+      {
+        intents: ['one'],
+        entities: [],
+        confidence: 1
+      },
+      {
+        intents: ['two'],
+        entities: ['two'],
+        confidence: 2
+      }
+    ]
 
     expect(mapNluBFromApiToDomain(nluBRawData)).toStrictEqual(expectedResult)
   })
@@ -69,8 +95,18 @@ describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
       },
       ...restOfData
     ]
-    const expectedResult = [...nluBRawData]
-    expectedResult[0].confidence = 0
+    const expectedResult: ServiceResponse[] = [
+      {
+        intents: ['one'],
+        entities: ['one'],
+        confidence: 0
+      },
+      {
+        intents: ['two'],
+        entities: ['two'],
+        confidence: 2
+      }
+    ]
 
     expect(mapNluBFromApiToDomain(nluBRawData)).toStrictEqual(expectedResult)
   })

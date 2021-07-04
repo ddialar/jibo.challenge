@@ -1,40 +1,40 @@
 import { mapNluAFromApiToDomain } from '..'
-import { NluAResponse } from '@types'
+import { NluAResponse, ServiceResponse } from '@types'
+
+const mockedRequestData: NluAResponse = {
+  intents: ['one', 'two'],
+  entities: ['one', 'two'],
+  confidence: 10
+}
 
 describe('[ MAPPERS ] - mapNluAFromApiToDomain', () => {
-  const mockedData: NluAResponse = {
-    intents: ['one', 'two'],
-    entities: ['one', 'two'],
-    confidence: 10
-  }
-
   it('maps the information successfully', () => {
-    const nluARawData: NluAResponse = { ...mockedData }
-    const expectedResult: NluAResponse = { ...nluARawData }
+    const nluARawData: NluAResponse = { ...mockedRequestData }
+    const expectedResult: ServiceResponse[] = [nluARawData]
 
     expect(mapNluAFromApiToDomain(nluARawData)).toStrictEqual(expectedResult)
   })
 
   it('returns the default intents value when it is not provided', () => {
-    const { entities, confidence } = mockedData
+    const { entities, confidence } = mockedRequestData
     const nluARawData = { entities, confidence }
-    const expectedResult: NluAResponse = { ...nluARawData, intents: [] }
+    const expectedResult: ServiceResponse[] = [{ ...nluARawData, intents: [] }]
 
     expect(mapNluAFromApiToDomain(nluARawData)).toStrictEqual(expectedResult)
   })
 
   it('returns the default entities value when it is not provided', () => {
-    const { intents, confidence } = mockedData
+    const { intents, confidence } = mockedRequestData
     const nluARawData = { intents, confidence }
-    const expectedResult: NluAResponse = { ...nluARawData, entities: [] }
+    const expectedResult: ServiceResponse[] = [{ ...nluARawData, entities: [] }]
 
     expect(mapNluAFromApiToDomain(nluARawData)).toStrictEqual(expectedResult)
   })
 
   it('returns the default confidence value when it is not provided', () => {
-    const { intents, entities } = mockedData
+    const { intents, entities } = mockedRequestData
     const nluARawData = { intents, entities }
-    const expectedResult: NluAResponse = { ...nluARawData, confidence: 0 }
+    const expectedResult: ServiceResponse[] = [{ ...nluARawData, confidence: 0 }]
 
     expect(mapNluAFromApiToDomain(nluARawData)).toStrictEqual(expectedResult)
   })
