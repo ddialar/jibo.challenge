@@ -1,6 +1,6 @@
 import { Request } from 'express'
-import { ApiRequest } from '@types'
+import { ServiceRequest } from '@types'
 
 export interface NluRequest extends Request {
-  nlu: ApiRequest
+  nlu: ServiceRequest
 }
