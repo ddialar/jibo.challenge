@@ -1,8 +1,6 @@
-type NluBModels = 'modelA' | 'modelB' | 'modelC'
-
 export interface NluBRequest {
   utterance: string
-  model: NluBModels
+  model: string
 }
 
 export interface NluBResponse {
