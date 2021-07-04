@@ -7,6 +7,6 @@ export interface NluBRequest {
 
 export interface NluBResponse {
   intent: string
-  entities: string
+  entity: string
   confidence: number
 }
