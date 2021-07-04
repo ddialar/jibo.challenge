@@ -1,9 +1,13 @@
 import { NluBRestApi } from '@infrastructure/api'
 import { mapErrorFromApiToDomain, mapNluBFromApiToDomain } from '@infrastructure/mappers'
-import { NluBRequest, NluBResponse, ApiError } from '@types'
+import { NluBRequest, ServiceResponse, ApiError } from '@types'
 
-export const getNluBData = async ({ utterance, model }: NluBRequest): Promise<NluBResponse[] | null | ApiError> => {
-  const result = await NluBRestApi.getNluBData({ utterance, model })
+const allowedNluBModels = ['modelA', 'modelB', 'modelC']
 
-  return 'error' in result ? mapErrorFromApiToDomain(result) : mapNluBFromApiToDomain(result)
+export const getNluBData = async ({ utterance, model }: NluBRequest): Promise<ServiceResponse[] | null | ApiError> => {
+  const result = allowedNluBModels.includes(model)
+    ? await NluBRestApi.getNluBData({ utterance, model })
+    : null
+
+  return result && 'error' in result ? mapErrorFromApiToDomain(result) : mapNluBFromApiToDomain(result)
 }

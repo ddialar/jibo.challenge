@@ -21,7 +21,7 @@ describe('[ DATASOURCES ] - getNluAData', () => {
   it('returns the requested data successfully', async () => {
     jest.spyOn(NluARestApi, methodToBeMocked).mockResolvedValue(mockedNluRawData)
 
-    const expectedResult = { ...mockedNluRawData }
+    const expectedResult = [mockedNluRawData]
     const result = await getNluAData(mockedNluARequestData)
 
     expect(result).toStrictEqual(expectedResult)
