@@ -25,6 +25,11 @@ export const runRequest = async ({ method, baseUrl, url, body, timeout = 5000 }:
     return (await axios(requestConfig)).data
   } catch (error) {
     // NOTE: 'error' is AxiosError type.
-    return axios.isAxiosError(error) ? error?.response?.data : { message: error.message }
+    return {
+      error: true,
+      ...(axios.isAxiosError(error)
+        ? error?.response?.data
+        : { message: error.message })
+    }
   }
 }
