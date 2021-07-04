@@ -1,6 +1,7 @@
 import { getNluAData } from '../..'
 import { NluARestApi } from '@infrastructure/api'
 import { NluARequest } from '@types'
+import { NluServiceUnavailableError } from '@errors'
 
 const methodToBeMocked = 'getNluAData'
 const mockedNluARequestData: NluARequest = {
@@ -29,17 +30,6 @@ describe('[ DATASOURCES ] - getNluAData', () => {
     jest.spyOn(NluARestApi, methodToBeMocked).mockRestore()
   })
 
-  it('returns custom error object when something went wrong with the request', async () => {
-    jest.spyOn(NluARestApi, methodToBeMocked).mockResolvedValue(mockedErrorReply)
-
-    const expectedResult = { ...mockedErrorReply }
-    const result = await getNluAData(mockedNluARequestData)
-
-    expect(result).toStrictEqual(expectedResult)
-
-    jest.spyOn(NluARestApi, methodToBeMocked).mockRestore()
-  })
-
   it('returns null when an empty object is retrieved from the API', async () => {
     jest.spyOn(NluARestApi, methodToBeMocked).mockResolvedValue({})
 
@@ -50,12 +40,19 @@ describe('[ DATASOURCES ] - getNluAData', () => {
     jest.spyOn(NluARestApi, methodToBeMocked).mockRestore()
   })
 
-  it('returns well formatted error when it is retrieved from the API', async () => {
-    jest.spyOn(NluARestApi, methodToBeMocked).mockResolvedValue({})
+  it('throws a custom error when there are troubbles in the remote resource', async () => {
+    jest.spyOn(NluARestApi, methodToBeMocked).mockResolvedValue(mockedErrorReply)
 
-    const result = await getNluAData(mockedNluARequestData)
+    const errorMessage = `Retrieving NLU_A data with params text '${mockedNluARequestData.text}' and model '${mockedNluARequestData.model}'. ${mockedErrorReply.message}`
+    const expectedError = new NluServiceUnavailableError(errorMessage)
 
-    expect(result).toBeNull()
+    try {
+      await getNluAData(mockedNluARequestData)
+    } catch (error) {
+      expect(error.status).toBe(expectedError.status)
+      expect(error.message).toBe(expectedError.message)
+      expect(error.description).toBe(expectedError.description)
+    }
 
     jest.spyOn(NluARestApi, methodToBeMocked).mockRestore()
   })
