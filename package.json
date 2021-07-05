@@ -1,7 +1,7 @@
 {
   "name": "jibo.challenge",
   "version": "1.0.0",
-  "description": "Code challenge for Jibo",
+  "description": "Jibo code challenge",
   "author": "Dailos Rafael Díaz Lara <https://github.com/ddialar>",
   "license": "CC-BY-NC-4.0",
   "main": "dist/server.js",
