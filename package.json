@@ -32,6 +32,7 @@
     "prepare": "husky install",
     "test": "npm run test:clear_cache && jest --runInBand",
     "test:watch": "npm run test:clear_cache && jest --watch --runInBand --detectOpenHandles --verbose",
+    "test:coverage": "npm run test:clear_cache && jest --runInBand --coverage",
     "test:clear_cache": "jest --clearCache"
   },
   "lint-staged": {
