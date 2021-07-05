@@ -1,7 +1,7 @@
 import supertest, { SuperTest, Test } from 'supertest'
 
 import { NluARestApi, NluBRestApi } from '@infrastructure/api'
-import { OK, BAD_REQUEST } from '@errors'
+import { OK, NOT_FOUND } from '@errors'
 import { server } from '@infrastructure/server'
 import {
   mockedServiceRequest,
@@ -13,7 +13,7 @@ import {
 const NLU_PATH = '/nlu'
 
 describe('[ SERVER ] - NLU endpoints', () => {
-  describe(`[ GET ] ${NLU_PATH}`, () => {
+  describe(`[ GET ] ${NLU_PATH}/:text/:utterance/:model`, () => {
     const request: SuperTest<Test> = supertest(server)
 
     describe('returns OK (200) and a valid response', () => {
@@ -26,7 +26,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         jest.spyOn(NluARestApi, 'getNluAData').mockResolvedValue({ ...mockedNluARawData, confidence: 1000 })
         jest.spyOn(NluBRestApi, 'getNluBData').mockResolvedValue(mockedNluBRawData)
 
-        const serviceRequest = { ...mockedServiceRequest }
+        const { text, utterance, model } = mockedServiceRequest
         const expectedResult = {
           intents: [
             'one',
@@ -40,8 +40,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         }
 
         await request
-          .get(NLU_PATH)
-          .send(serviceRequest)
+          .get(`${NLU_PATH}/${text}/${utterance}/${model}`)
           .expect(OK)
           .then(({ body }) => {
             expect(body).toStrictEqual(expectedResult)
@@ -52,7 +51,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         jest.spyOn(NluARestApi, 'getNluAData').mockResolvedValue({ ...mockedNluARawData, confidence: 9 })
         jest.spyOn(NluBRestApi, 'getNluBData').mockResolvedValue(mockedNluBRawData)
 
-        const serviceRequest = { ...mockedServiceRequest }
+        const { text, utterance, model } = mockedServiceRequest
         const expectedResult = {
           intents: [
             'ten'
@@ -64,8 +63,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         }
 
         await request
-          .get(NLU_PATH)
-          .send(serviceRequest)
+          .get(`${NLU_PATH}/${text}/${utterance}/${model}`)
           .expect(OK)
           .then(({ body }) => {
             expect(body).toStrictEqual(expectedResult)
@@ -76,7 +74,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         jest.spyOn(NluARestApi, 'getNluAData').mockResolvedValue(mockedNluARawData)
         jest.spyOn(NluBRestApi, 'getNluBData').mockResolvedValue(mockedNluBRawData)
 
-        const serviceRequest = { ...mockedServiceRequest }
+        const { text, utterance, model } = mockedServiceRequest
         const expectedResult = {
           intents: [
             'one',
@@ -92,8 +90,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         }
 
         await request
-          .get(NLU_PATH)
-          .send(serviceRequest)
+          .get(`${NLU_PATH}/${text}/${utterance}/${model}`)
           .expect(OK)
           .then(({ body }) => {
             expect(body).toStrictEqual(expectedResult)
@@ -104,7 +101,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         jest.spyOn(NluARestApi, 'getNluAData').mockResolvedValue(mockedErrorReply)
         jest.spyOn(NluBRestApi, 'getNluBData').mockResolvedValue(mockedNluBRawData)
 
-        const serviceRequest = { ...mockedServiceRequest }
+        const { text, utterance, model } = mockedServiceRequest
         const expectedResult = {
           intents: [
             'ten'
@@ -116,8 +113,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         }
 
         await request
-          .get(NLU_PATH)
-          .send(serviceRequest)
+          .get(`${NLU_PATH}/${text}/${utterance}/${model}`)
           .expect(OK)
           .then(({ body }) => {
             expect(body).toStrictEqual(expectedResult)
@@ -128,7 +124,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         jest.spyOn(NluARestApi, 'getNluAData').mockResolvedValue(mockedNluARawData)
         jest.spyOn(NluBRestApi, 'getNluBData').mockResolvedValue(mockedErrorReply)
 
-        const serviceRequest = { ...mockedServiceRequest }
+        const { text, utterance, model } = mockedServiceRequest
         const expectedResult = {
           intents: [
             'one',
@@ -142,8 +138,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         }
 
         await request
-          .get(NLU_PATH)
-          .send(serviceRequest)
+          .get(`${NLU_PATH}/${text}/${utterance}/${model}`)
           .expect(OK)
           .then(({ body }) => {
             expect(body).toStrictEqual(expectedResult)
@@ -154,7 +149,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         jest.spyOn(NluARestApi, 'getNluAData').mockResolvedValue({})
         jest.spyOn(NluBRestApi, 'getNluBData').mockResolvedValue({})
 
-        const serviceRequest = { ...mockedServiceRequest }
+        const { text, utterance, model } = mockedServiceRequest
         const expectedResult = {
           intents: [],
           entities: [],
@@ -162,8 +157,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         }
 
         await request
-          .get(NLU_PATH)
-          .send(serviceRequest)
+          .get(`${NLU_PATH}/${text}/${utterance}/${model}`)
           .expect(OK)
           .then(({ body }) => {
             expect(body).toStrictEqual(expectedResult)
@@ -174,7 +168,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         jest.spyOn(NluARestApi, 'getNluAData').mockResolvedValue(mockedErrorReply)
         jest.spyOn(NluBRestApi, 'getNluBData').mockResolvedValue(mockedErrorReply)
 
-        const serviceRequest = { ...mockedServiceRequest }
+        const { text, utterance, model } = mockedServiceRequest
         const expectedResult = {
           intents: [],
           entities: [],
@@ -182,8 +176,7 @@ describe('[ SERVER ] - NLU endpoints', () => {
         }
 
         await request
-          .get(NLU_PATH)
-          .send(serviceRequest)
+          .get(`${NLU_PATH}/${text}/${utterance}/${model}`)
           .expect(OK)
           .then(({ body }) => {
             expect(body).toStrictEqual(expectedResult)
@@ -191,52 +184,48 @@ describe('[ SERVER ] - NLU endpoints', () => {
       })
     })
 
-    describe('returns BAD_REQUEST (400) and a valid response', () => {
-      it('when request payload is not provided', async () => {
+    describe('returns NOT_FOUND (404) and a valid response', () => {
+      const expectedErrorObject = { error: true, message: 'Route not found.' }
+
+      it('when request params are not provided', async () => {
         await request
           .get(NLU_PATH)
-          .expect(BAD_REQUEST)
+          .expect(NOT_FOUND)
           .then(({ text }) => {
-            expect(JSON.parse(text)).toEqual({ error: true, message: 'Wrong NLU request parameters error.' })
+            expect(JSON.parse(text)).toEqual(expectedErrorObject)
           })
       })
 
-      it('when text field is not provided in the request payload', async () => {
-        const { text, ...malformedRequestParams } = mockedServiceRequest
-        const serviceRequest = { ...malformedRequestParams }
+      it('when text field is not provided as request param', async () => {
+        const { utterance, model } = mockedServiceRequest
 
         await request
-          .get(NLU_PATH)
-          .send(serviceRequest)
-          .expect(BAD_REQUEST)
+          .get(`${NLU_PATH}/${utterance}/${model}`)
+          .expect(NOT_FOUND)
           .then(({ text }) => {
-            expect(JSON.parse(text)).toEqual({ error: true, message: 'Wrong NLU request parameters error.' })
+            expect(JSON.parse(text)).toEqual(expectedErrorObject)
           })
       })
 
-      it('when utterance field is not provided in the request payload', async () => {
-        const { utterance, ...malformedRequestParams } = mockedServiceRequest
-        const serviceRequest = { ...malformedRequestParams }
+      it('when utterance field is not provided as request param', async () => {
+        const { text, model } = mockedServiceRequest
 
         await request
-          .get(NLU_PATH)
-          .send(serviceRequest)
-          .expect(BAD_REQUEST)
+          .get(`${NLU_PATH}/${text}/${model}`)
+          .expect(NOT_FOUND)
           .then(({ text }) => {
-            expect(JSON.parse(text)).toEqual({ error: true, message: 'Wrong NLU request parameters error.' })
+            expect(JSON.parse(text)).toEqual(expectedErrorObject)
           })
       })
 
-      it('when model field is not provided in the request payload', async () => {
-        const { model, ...malformedRequestParams } = mockedServiceRequest
-        const serviceRequest = { ...malformedRequestParams }
+      it('when model field is not provided as request param', async () => {
+        const { text, utterance } = mockedServiceRequest
 
         await request
-          .get(NLU_PATH)
-          .send(serviceRequest)
-          .expect(BAD_REQUEST)
+          .get(`${NLU_PATH}/${text}/${utterance}`)
+          .expect(NOT_FOUND)
           .then(({ text }) => {
-            expect(JSON.parse(text)).toEqual({ error: true, message: 'Wrong NLU request parameters error.' })
+            expect(JSON.parse(text)).toEqual(expectedErrorObject)
           })
       })
     })
