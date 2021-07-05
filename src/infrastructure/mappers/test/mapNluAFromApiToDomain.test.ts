@@ -1,22 +1,19 @@
 import { mapNluAFromApiToDomain } from '..'
-import { NluAResponse, ServiceResponse } from '@types'
-
-const mockedRequestData: NluAResponse = {
-  intents: ['one', 'two'],
-  entities: ['one', 'two'],
-  confidence: 10
-}
+import { ServiceResponse } from '@types'
+import {
+  mockedNluARawData
+} from '@testingFixtures'
 
 describe('[ MAPPERS ] - mapNluAFromApiToDomain', () => {
   it('maps the information successfully', () => {
-    const nluARawData: NluAResponse = { ...mockedRequestData }
+    const nluARawData = { ...mockedNluARawData }
     const expectedResult: ServiceResponse[] = [nluARawData]
 
     expect(mapNluAFromApiToDomain(nluARawData)).toStrictEqual(expectedResult)
   })
 
   it('returns the default intents value when it is not provided', () => {
-    const { entities, confidence } = mockedRequestData
+    const { entities, confidence } = mockedNluARawData
     const nluARawData = { entities, confidence }
     const expectedResult: ServiceResponse[] = [{ ...nluARawData, intents: [] }]
 
@@ -24,7 +21,7 @@ describe('[ MAPPERS ] - mapNluAFromApiToDomain', () => {
   })
 
   it('returns the default entities value when it is not provided', () => {
-    const { intents, confidence } = mockedRequestData
+    const { intents, confidence } = mockedNluARawData
     const nluARawData = { intents, confidence }
     const expectedResult: ServiceResponse[] = [{ ...nluARawData, entities: [] }]
 
@@ -32,7 +29,7 @@ describe('[ MAPPERS ] - mapNluAFromApiToDomain', () => {
   })
 
   it('returns the default confidence value when it is not provided', () => {
-    const { intents, entities } = mockedRequestData
+    const { intents, entities } = mockedNluARawData
     const nluARawData = { intents, entities }
     const expectedResult: ServiceResponse[] = [{ ...nluARawData, confidence: 0 }]
 
