@@ -1,2 +1,2 @@
 export * from './handleHttpError.middleware'
-export * from './validateNluRequest.middleware'
+export * from './handleNotFoundRouteError.middleware'
