@@ -1,22 +1,12 @@
 import { mapNluBFromApiToDomain } from '..'
 import { NluBResponse, ServiceResponse } from '@types'
+import {
+  mockedNluBRawData
+} from '@testingFixtures'
 
 describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
-  const mockedData: NluBResponse[] = [
-    {
-      intent: 'one',
-      entity: 'one',
-      confidence: 1
-    },
-    {
-      intent: 'two',
-      entity: 'two',
-      confidence: 2
-    }
-  ]
-
   it('maps the information successfully', () => {
-    const nluBRawData: NluBResponse[] = [...mockedData]
+    const nluBRawData: NluBResponse[] = [...mockedNluBRawData]
     const expectedResult: ServiceResponse[] = [
       {
         intents: ['one'],
@@ -27,6 +17,11 @@ describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
         intents: ['two'],
         entities: ['two'],
         confidence: 2
+      },
+      {
+        intents: ['ten'],
+        entities: ['ten'],
+        confidence: 10
       }
     ]
 
@@ -34,7 +29,7 @@ describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
   })
 
   it('returns the default intent value when it is not provided', () => {
-    const [first, ...restOfData] = mockedData
+    const [first, ...restOfData] = mockedNluBRawData
     const { entity, confidence } = first
     const nluBRawData: Partial<NluBResponse>[] = [
       {
@@ -53,6 +48,11 @@ describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
         intents: ['two'],
         entities: ['two'],
         confidence: 2
+      },
+      {
+        intents: ['ten'],
+        entities: ['ten'],
+        confidence: 10
       }
     ]
 
@@ -60,7 +60,7 @@ describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
   })
 
   it('returns the default entity value when it is not provided', () => {
-    const [first, ...restOfData] = mockedData
+    const [first, ...restOfData] = mockedNluBRawData
     const { intent, confidence } = first
     const nluBRawData: Partial<NluBResponse>[] = [
       {
@@ -79,6 +79,11 @@ describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
         intents: ['two'],
         entities: ['two'],
         confidence: 2
+      },
+      {
+        intents: ['ten'],
+        entities: ['ten'],
+        confidence: 10
       }
     ]
 
@@ -86,7 +91,7 @@ describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
   })
 
   it('returns the default confidence value when it is not provided', () => {
-    const [first, ...restOfData] = mockedData
+    const [first, ...restOfData] = mockedNluBRawData
     const { intent, entity } = first
     const nluBRawData: Partial<NluBResponse>[] = [
       {
@@ -105,6 +110,11 @@ describe('[ MAPPERS ] - mapNluBFromApiToDomain', () => {
         intents: ['two'],
         entities: ['two'],
         confidence: 2
+      },
+      {
+        intents: ['ten'],
+        entities: ['ten'],
+        confidence: 10
       }
     ]
 
