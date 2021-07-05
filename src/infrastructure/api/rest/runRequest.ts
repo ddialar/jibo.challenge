@@ -8,7 +8,7 @@ export interface RequestArgs {
   timeout?: number
 }
 
-export const runRequest = async ({ method, baseUrl, url, body, timeout = 5000 }: RequestArgs) => {
+export const runRequest = async ({ method, baseUrl, url = '', body, timeout = 5000 }: RequestArgs) => {
   const requestConfig = {
     method,
     baseUrl,
