@@ -1,4 +1,4 @@
-import { NluBRestApi } from '@infrastructure/api'
+import { NluBRestApi } from '@infrastructure/repositories'
 import { mapNluBFromApiToDomain } from '@infrastructure/mappers'
 import { NluBRequest, ServiceResponse } from '@types'
 import { NluModelNotValidError, NluServiceUnavailableError } from '@errors'

@@ -1,6 +1,6 @@
 import supertest, { SuperTest, Test } from 'supertest'
 
-import { NluARestApi, NluBRestApi } from '@infrastructure/api'
+import { NluARestApi, NluBRestApi } from '@infrastructure/repositories'
 import { OK, NOT_FOUND } from '@errors'
 import { server } from '@infrastructure/server'
 import {

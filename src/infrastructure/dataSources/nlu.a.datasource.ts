@@ -1,4 +1,4 @@
-import { NluARestApi } from '@infrastructure/api'
+import { NluARestApi } from '@infrastructure/repositories'
 import { mapNluAFromApiToDomain } from '@infrastructure/mappers'
 import { NluARequest, ServiceResponse } from '@types'
 import { NluServiceUnavailableError } from '@errors'

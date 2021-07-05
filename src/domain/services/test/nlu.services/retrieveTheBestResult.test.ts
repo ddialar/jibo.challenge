@@ -1,5 +1,5 @@
 import { retrieveTheBestResult } from '../..'
-import { NluARestApi, NluBRestApi } from '@infrastructure/api'
+import { NluARestApi, NluBRestApi } from '@infrastructure/repositories'
 import {
   mockedServiceRequest,
   mockedNluARawData,

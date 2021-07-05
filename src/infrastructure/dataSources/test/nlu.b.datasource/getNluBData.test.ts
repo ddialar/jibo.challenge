@@ -1,5 +1,5 @@
 import { getNluBData } from '../..'
-import { NluBRestApi } from '@infrastructure/api'
+import { NluBRestApi } from '@infrastructure/repositories'
 import { NluModelNotValidError, NluServiceUnavailableError } from '@errors'
 import {
   mockedNluBRawData,

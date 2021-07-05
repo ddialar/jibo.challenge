@@ -1,5 +1,5 @@
 import { getNluAData } from '../..'
-import { NluARestApi } from '@infrastructure/api'
+import { NluARestApi } from '@infrastructure/repositories'
 import { NluServiceUnavailableError } from '@errors'
 import {
   mockedNluARawData,
