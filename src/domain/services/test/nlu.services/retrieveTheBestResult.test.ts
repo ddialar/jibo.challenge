@@ -1,39 +1,11 @@
 import { retrieveTheBestResult } from '../..'
 import { NluARestApi, NluBRestApi } from '@infrastructure/api'
-// import { ServiceRequest, ServiceResponse } from '@types'
-import { ServiceRequest } from '@types'
-
-const mockedServiceRequest: ServiceRequest = {
-  text: 'testing text',
-  utterance: 'testing utterance',
-  model: 'modelA'
-}
-const mockedNluARawData = {
-  intents: ['one', 'two'],
-  entities: ['one', 'two'],
-  confidence: 10
-}
-const mockedNluBRawData = [
-  {
-    intent: 'one',
-    entity: 'one',
-    confidence: 1
-  },
-  {
-    intent: 'two',
-    entity: 'two',
-    confidence: 2
-  },
-  {
-    intent: 'ten',
-    entity: 'ten',
-    confidence: 10
-  }
-]
-const mockedErrorReply = {
-  error: true,
-  message: 'Testing error message'
-}
+import {
+  mockedServiceRequest,
+  mockedNluARawData,
+  mockedNluBRawData,
+  mockedErrorReply
+} from '@testingFixtures'
 
 describe('[ SERVICES ] - retrieveTheBestResult', () => {
   afterEach(() => {
