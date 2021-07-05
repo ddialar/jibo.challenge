@@ -1,28 +1,19 @@
 import { getNluAData } from '../..'
 import { NluARestApi } from '@infrastructure/api'
-import { NluARequest } from '@types'
 import { NluServiceUnavailableError } from '@errors'
+import {
+  mockedNluARawData,
+  mockedNluARequestData,
+  mockedErrorReply
+} from '@testingFixtures'
 
 const methodToBeMocked = 'getNluAData'
-const mockedNluARequestData: NluARequest = {
-  text: 'one',
-  model: 'testing model'
-}
-const mockedNluRawData = {
-  intents: ['one', 'two'],
-  entities: ['one', 'two'],
-  confidence: 10
-}
-const mockedErrorReply = {
-  error: true,
-  message: 'Testing error message'
-}
 
 describe('[ DATASOURCES ] - getNluAData', () => {
   it('returns the requested data successfully', async () => {
-    jest.spyOn(NluARestApi, methodToBeMocked).mockResolvedValue(mockedNluRawData)
+    jest.spyOn(NluARestApi, methodToBeMocked).mockResolvedValue(mockedNluARawData)
 
-    const expectedResult = [mockedNluRawData]
+    const expectedResult = [mockedNluARawData]
     const result = await getNluAData(mockedNluARequestData)
 
     expect(result).toStrictEqual(expectedResult)
