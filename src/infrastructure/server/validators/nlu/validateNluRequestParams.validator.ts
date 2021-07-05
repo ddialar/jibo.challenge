@@ -1,5 +1,5 @@
-import { NluDto } from '@infrastructure/dtos'
 import Joi from 'joi'
+import { ServiceRequest } from '@types'
 
 import { nluText, nluUtterance, nluModel } from '../validation.rules'
 
@@ -7,10 +7,10 @@ const schema = Joi.object({ text: nluText, utterance: nluUtterance, model: nluMo
 
 interface ValidationResult {
   error?: string
-  value: NluDto
+  value: ServiceRequest
 }
 
-export const validateNluRequestParams = ({ text, utterance, model }: NluDto): ValidationResult => {
+export const validateNluRequestParams = ({ text, utterance, model }: Partial<ServiceRequest>): ValidationResult => {
   const { error, value } = schema.validate({ text, utterance, model })
 
   return {
