@@ -1,33 +1,17 @@
 import { getNluBData } from '../..'
 import { NluBRestApi } from '@infrastructure/api'
-import { NluBRequest } from '@types'
 import { NluModelNotValidError, NluServiceUnavailableError } from '@errors'
+import {
+  mockedNluBRawData,
+  mockedNluBRequestData,
+  mockedErrorReply
+} from '@testingFixtures'
 
 const methodToBeMocked = 'getNluBData'
-const mockedNluBRequestData: NluBRequest = {
-  utterance: 'one',
-  model: 'modelA'
-}
-const mockedNluRawData = [
-  {
-    intent: 'one',
-    entity: 'one',
-    confidence: 1
-  },
-  {
-    intent: 'two',
-    entity: 'two',
-    confidence: 2
-  }
-]
-const mockedErrorReply = {
-  error: true,
-  message: 'Testing error message'
-}
 
 describe('[ DATASOURCES ] - getNluBData', () => {
   it('returns the requested data successfully', async () => {
-    jest.spyOn(NluBRestApi, methodToBeMocked).mockResolvedValue(mockedNluRawData)
+    jest.spyOn(NluBRestApi, methodToBeMocked).mockResolvedValue(mockedNluBRawData)
 
     const nluBRequestData = { ...mockedNluBRequestData }
     const expectedResult = [
@@ -40,6 +24,11 @@ describe('[ DATASOURCES ] - getNluBData', () => {
         intents: ['two'],
         entities: ['two'],
         confidence: 2
+      },
+      {
+        intents: ['ten'],
+        entities: ['ten'],
+        confidence: 10
       }
     ]
     const result = await getNluBData(nluBRequestData)

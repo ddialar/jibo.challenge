@@ -1,3 +1,10 @@
+import { NluBRequest } from '@types'
+
+export const mockedNluBRequestData: NluBRequest = {
+  utterance: 'one',
+  model: 'modelA'
+}
+
 export const mockedNluBRawData = [
   {
     intent: 'one',
