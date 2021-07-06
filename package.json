@@ -22,6 +22,7 @@
     "TDD"
   ],
   "scripts": {
+    "build": "webpack --config ./webpack/webpack.prod.js",
     "build:dev": "webpack --config ./webpack/webpack.dev.js",
     "deps": "npm run deps:audit && npm run deps:sec-scan",
     "deps:audit": "npm audit && npm outdated",

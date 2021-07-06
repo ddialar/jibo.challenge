@@ -24,6 +24,7 @@
     -   [Modules installation process](https://github.com/ddialar/jibo.challenge#commands-installation)
     -   [Run tests](https://github.com/ddialar/jibo.challenge#commands-tests)
     -   [Run application in development mode](https://github.com/ddialar/jibo.challenge#commands-dev-mode)
+    -   [Build the application](https://github.com/ddialar/jibo.challenge#commands-build)
 -   [API REST documentation](https://github.com/ddialar/jibo.challenge#apidoc)
 -   [Bitacora of the repository](https://github.com/ddialar/jibo.challenge#bitacora)
 -   [Technical debt](https://github.com/ddialar/jibo.challenge#tech-debt)
@@ -390,6 +391,16 @@ npm run test:coverage
 
 ```sh
 npm run build:dev
+```
+
+### <a id="commands-build"></a>🚀 Build the application
+
+**Required files:**
+
+-   `env/.env`
+
+```sh
+npm run build
 ```
 
 ## <a id="apidoc"></a>📗 API REST documentation
