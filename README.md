@@ -129,20 +129,32 @@ The contracts of each API are listed here:
 
 1. If we add another NLU service, let’s say NLU_C, that has an average response time of 50ms, how this would affect the design of the `test-service`?
 
-    If we just limit our analysis to the simple factor of reponse time, the `test-service` won't be affected any way.
+    If we just limit our analysis to the simple fact of reponse time, the `test-service` won't be affected any way.
     
-    The reason of this sentence is because in order to make a valid comparison with the information provided by the multiple data sources, we have to wait for the slowest one so it doesn't matter if we include faster services.
+    The reason of this sentence is because in order to make a valid comparison with the information provided by the multiple data sources, we have to wait for the slowest one, so it doesn't matter if we include faster services.
 
-    However, a possible solution in order to improve the response speed could be to cache the requests and their results. This way, every time the services receives the same request, we can return the already persisted value.
+    However, a possible solution in order to improve the response speed could be to cache the requests and their results. This way, every time the service receives the same request, we can return the already persisted result.
 
-    Nevertheless, this last opctions comes with a cons. If the data sources changes, our service must be notified and the whole cached requests updated.
+    Nevertheless, this last option comes with a cons. If the data sources change, our service must be notified and the whole cached requests updated.
 
-    At this point, we have to analyze the const/profit balance and take a final decision. 
+    At this point, we have to analyze the cost/profit balance and take a final decision. 
 
 2. test-service API
     - Request
 
-      `url/to/service/nlu/:text/:utterance/:model`
+      [ GET ] `<url/to/service>/nlu/:text/:utterance/:model`
+
+      A strict route definition based on request params was selected over other possible solutions because it's the most robust, well formed and type guarded option.
+
+      It's the most robust option because due to the whole parameters are required in order to performance a valid request, we are defining a well know data structure and, in case the URL doesn't include some of the params, it will result in an error from the service, due to the provided resource doesn't match with defined ones.
+
+      It's the most well formed option because we are able to know what element we are providing to the URL and what is it place on it.
+
+      It's the most type guarded option because this strategy of passing information always provide data as `string` to the endpoint business logic, so based on that, we can work applying validators and/or parsers.
+
+      Another possible option could be use a plain URL and define our request via query params. It's a well known and really extended option but, due to the optional nature of the provided parameters, it will require to implement additional checking business logic in the service. In addition, due to the URL is so generic, it could be misunderstood with other opperation (for instance, providing a set of query params to run an specific action and with another set, run a completly differente one). This point increases the complexity of the code in charge of handling the resquests to this path.
+
+      Finally, the most comfortable option from the point of view of passing information to the service, would be to directly send a JSON object as `body` payload in the request. However, despite of it's supported by REST in `GET` type requests, it's not usual to run these kind of requests this way and not all libraries have implemented the needed logic in order to handle this strategy. That is the main reason in order to discarg this option to implement the service API.
 
     - Response
 
