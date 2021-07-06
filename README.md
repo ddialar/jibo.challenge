@@ -180,7 +180,7 @@ The contracts of each API are listed here:
       }
       ```
 
-      Finally, in case the requested URL is malformed, the service will retun a not-found error (404).
+      Finally, in case the requested URL is malformed, the service will return a not-found error (404).
 
 ## <a id="description"></a>🔍 Description
 
