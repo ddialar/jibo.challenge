@@ -263,7 +263,7 @@ The full folders structure is next:
     📂 domain/
     |   📂 services/
     📂 infrastructure/
-    |   📂 repository/
+    |   📂 repositories/
     |   |   📂 rest/
     |   📂 dataSources/
     |   📂 mappers/
